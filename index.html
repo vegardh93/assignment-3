@@ -6,26 +6,35 @@
     <title>Music Player</title>
 </head>
 <body>
+    <!-- Header. -->
     <header class="siteHeader">
         <h1 class="siteHeader__title">Music Player</h1>
     </header>
+    <!-- Main content. -->
     <main class="appLayout">
+        <!-- Playlist. -->
         <section class="playlist" id="playlist">
             <h2 class="playlist__title">My Playlist</h2>
+            <!-- Total playlist duration. -->
             <p class="playlist__duration">
                 Total duration: <span id="playlistDuration">0:00</span>
             </p>
+            <!-- Displayed when the playlist contains no songs. -->
             <p class="playlist__empty" id="playlistEmpty">
                 Your playlist is empty.
             </p>
+            <!-- List that displays songs added to the playlist. -->
             <ul class="playlist__items" id="playlistItems"></ul>
         </section>
+        <!-- Displays available songs and controls for browsing them. -->
         <section class="collection" id="collection">
             <h2 class="collection__title">Music Collection</h2>
+            <!-- Search field for song titles and artists. -->
             <div class="collection__search">
                 <label for="searchInput">Search songs</label>
                 <input type="search" id="searchInput" placeholder="Search title or artist...">
             </div>
+            <!-- Genre filter. -->
             <div class="collection__filter">
                 <label for="genreFilter">Genre</label>
                 <select id="genreFilter">
@@ -37,6 +46,7 @@
                     <option value="Rock">Rock</option>
                 </select>
             </div>
+            <!-- Song sorting options. -->
             <div class="collection__sort">
                 <label for="sortSelect">Sort by</label>
                 <select id="sortSelect">
@@ -49,7 +59,9 @@
                     <option value="durationDescending">Duration (Longest First)</option>
                 </select>
             </div>
+            <!-- Container for song cards. -->
             <div class="collection__songGrid" id="songGrid"></div>
+            <!-- Displayed when no songs are found. -->
             <p class="collection__empty" id="collectionEmpty" hidden>
                 No songs found.
             </p>
