@@ -41,9 +41,10 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Playlist information. */
+/* Song counters and playlist duration. */
 .playlist__count,
-.playlist__duration {
+.playlist__duration,
+.collection__count {
     font-size: 0.875rem;
     opacity: 0.8;
 }
@@ -88,4 +89,9 @@ body {
     background-color: var(--colorSurface);
     border-radius: 1rem;
     padding: 1.5rem;
+}
+
+/* Music collection song counter. */
+.collection__count {
+    margin-bottom: 1rem;
 }
