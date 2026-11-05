@@ -5,3 +5,14 @@ body {
     font-family: var(--fontBody);
     min-height: 100vh;
 }
+
+/* Header */
+.siteHeader {
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.siteHeader__title {
+    font-family: var(--fontHeading);
+    font-size: 2rem;
+}
