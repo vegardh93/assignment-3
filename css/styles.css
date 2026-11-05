@@ -53,3 +53,22 @@ body {
 .playlist__duration {
     margin-bottom: 1rem;
 }
+
+/* Clear Playlist button. */
+.playlist__clearButton {
+    background-color: var(--colorAccent);
+    color: var(--colorBackground);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-family: var(--fontBody);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.playlist__clearButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
