@@ -1,0 +1,7 @@
+/* Body styling. */
+body {
+    background-color: var(--colorBackground);
+    color: var(--colorText);
+    font-family: var(--fontBody);
+    min-height: 100vh;
+}
