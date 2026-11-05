@@ -84,7 +84,7 @@ body {
     padding: 1rem 0;
 }
 
-/* Music collection */
+/* Music collection. */
 .collection {
     background-color: var(--colorSurface);
     border-radius: 1rem;
@@ -94,4 +94,28 @@ body {
 /* Music collection song counter. */
 .collection__count {
     margin-bottom: 1rem;
+}
+
+/* Music collection search field. */
+.collection__search {
+    margin-bottom: 1rem;
+}
+
+/* Search field label. */
+.collection__search label {
+    display: block;
+    font-size: 0.875rem;
+    margin-bottom:  0.5rem;
+}
+
+/* Search input */
+.collection__search input {
+    width: 100%;
+    background-color: var(--colorBackground);
+    color: var(--colorText);
+    border:1px solid var(--colorAccent);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-family: var(--fontBody);
+    font-size: 1rem;;
 }
