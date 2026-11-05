@@ -1,4 +1,4 @@
-/* Body styling. */
+/* Body. */
 body {
     background-color: var(--colorBackground);
     color: var(--colorText);
@@ -6,7 +6,7 @@ body {
     min-height: 100vh;
 }
 
-/* Header */
+/* Header. */
 .siteHeader {
     padding: 2rem 1rem;
     text-align: center;
@@ -15,4 +15,11 @@ body {
 .siteHeader__title {
     font-family: var(--fontHeading);
     font-size: 2rem;
+}
+
+/* Main content. */
+.appLayout {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
 }
