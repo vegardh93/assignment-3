@@ -1,7 +1,10 @@
-/* Color variables */
 :root {
+    /* Color variables */
     --colorBackground: #0f0d17;
     --colorSurface: #1e1a2b;
     --colorText: #f5f3ff;
     --colorAccent: #a78bfa;
+    /* Font variables */
+    --fontBody: "DM Sans", Arial, Helvetica, Verdana, sans-serif;
+    --fontHeading: "Space Grotesk", "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
