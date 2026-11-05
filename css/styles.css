@@ -108,7 +108,7 @@ body {
     margin-bottom:  0.5rem;
 }
 
-/* Search input */
+/* Search input. */
 .collection__search input {
     width: 100%;
     background-color: var(--colorBackground);
@@ -117,5 +117,73 @@ body {
     border-radius: 8px;
     padding: 0.75rem 1rem;
     font-family: var(--fontBody);
-    font-size: 1rem;;
+    font-size: 1rem;
+}
+
+/* Dropdown containers. */
+.collection__filter,
+.collection__sort {
+    margin-bottom: 1rem;
+}
+
+/* Dropdown labels. */
+.collection__filter label,
+.collection__sort label {
+    display: block;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Dropdown menus. */
+.collection__filter select,
+.collection__sort select {
+    width: 100%;
+    background-color: var(--colorBackground);
+    color: var(--colorText);
+    border: 1px solid var(--colorAccent);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-family: var(--fontBody);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Song card grid. */
+.collection__songGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* Song cards. */
+.songCard {
+    background-color: var(--colorBackground);
+    border: 1px solid var(--colorAccent);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+/* Song card album covers. */
+.songCard__cover {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Song card titles. */
+.songCard__title {
+    font-family: var(--fontHeading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Song card artists. */
+.songCard__artist {
+    font-size: 0.875rem;
+    opacity: 0.8;
+    margin-bottom: 0.75rem;
 }
