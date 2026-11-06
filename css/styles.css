@@ -188,6 +188,20 @@ body {
     margin-bottom: 0.75rem;
 }
 
+/* Song card genres. */
+.songCard__genre {
+    font-size: 0.875rem;
+    color: var(--colorAccent);
+    margin-bottom: 0.5rem;
+}
+
+/* Song card durations. */
+.songCard__duration {
+    font-size: 0.875rem;
+    opacity: 0.8;
+}
+
+
 /* Tablet layout. */
 @media (max-width: 1024px) {
     .collection__songGrid {
