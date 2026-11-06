@@ -216,6 +216,11 @@ body {
     cursor: pointer;
 }
 
+/* Add to Playlist button hover effect. */
+.songCard__addButton:hover {
+    opacity: 0.85;
+}
+
 /* Tablet layout. */
 @media (max-width: 1024px) {
     .collection__songGrid {
