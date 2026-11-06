@@ -201,3 +201,14 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Small mobile layout. */
+@media (max-width: 500px) {
+    .appLayout {
+        padding: 0 1rem 2rem;
+    }
+    .playlist,
+    .collection {
+        padding: 1rem;
+    }
+}
