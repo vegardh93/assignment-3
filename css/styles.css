@@ -106,8 +106,10 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Search field label. */
-.collection__search label {
+/* Search and dropdown labels. */
+.collection__search label,
+.collection__filter label,
+.collection__sort label {
     display: block;
     font-size: 0.875rem;
     margin-bottom:  0.5rem;
@@ -129,14 +131,6 @@ body {
 .collection__filter,
 .collection__sort {
     margin-bottom: 1rem;
-}
-
-/* Dropdown labels. */
-.collection__filter label,
-.collection__sort label {
-    display: block;
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
 }
 
 /* Dropdown menus. */
