@@ -201,6 +201,20 @@ body {
     opacity: 0.8;
 }
 
+/* Add to Playlist buttons. */
+.songCard__addButton {
+    width: 100%;
+    background-color: var(--colorAccent);
+    color: var(--colorBackground);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    font-family: var(--fontBody);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+}
 
 /* Tablet layout. */
 @media (max-width: 1024px) {
