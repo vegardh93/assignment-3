@@ -187,3 +187,17 @@ body {
     opacity: 0.8;
     margin-bottom: 0.75rem;
 }
+
+/* Tablet layout. */
+@media (max-width: 1024px) {
+    .collection__songGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile layout. */
+@media (max-width: 600px) {
+    .collection__songGrid {
+        grid-template-columns: 1fr;
+    }
+}
