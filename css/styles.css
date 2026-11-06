@@ -226,6 +226,14 @@ body {
     opacity: 0.85;
 }
 
+/* Empty music collection message. */
+.collection__empty {
+    text-align: center;
+    font-size: 0.875rem;
+    opacity: 0.7;
+    padding: 1rem 0;
+}
+
 /* Tablet layout. */
 @media (max-width: 1024px) {
     .collection__songGrid {
