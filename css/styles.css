@@ -76,6 +76,11 @@ body {
     cursor: not-allowed;
 }
 
+/* Clear Playlist button hover effect. */
+.playlist__clearButton:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
 /* Empty playlist message. */
 .playlist__empty {
     text-align: center;
