@@ -58,6 +58,12 @@ for (const song of songs) { // Go through each song.
     songDuration.className = "songCard__duration"; // Assign the paragraph's CSS class.
     songDuration.textContent = formatDuration(song.duration); // Set the paragraph's text to the formatted duration.
     songCard.appendChild(songDuration); // Add the duration to the song card.
+    // Add to playlist button.
+    const addToPlaylistButton = document.createElement("button"); // Create a button.
+    addToPlaylistButton.className = "songCard__addButton"; // Assign the button's CSS file.
+    addToPlaylistButton.type = "button"; // Set the button's type.
+    addToPlaylistButton.textContent = "Add to Playlist"; // Set the button's text.
+    songCard.appendChild(addToPlaylistButton); // Add the button to the song card.
     // Add the song card to the song grid.
     songGrid.appendChild(songCard);
 }
