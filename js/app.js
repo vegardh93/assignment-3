@@ -41,5 +41,9 @@ for (const song of songs) { // Go through each song.
     songTitle.className = "songCard__title"; // Assign the heading's CSS class.
     songTitle.textContent = song.title; // Set the heading's text to the song's title.
     songCard.appendChild(songTitle); // Add the heading to the song card.
+    const songArtist = document.createElement("p"); // Create a paragraph.
+    songArtist.className = "songCard__artist"; // Assign the paragraph's CSS class.
+    songArtist.textContent = song.artist; // Set the paragraph's text to the artist's name.
+    songCard.appendChild(songArtist); //Add the artist to the song card.
     songGrid.appendChild(songCard); // Add the song card to the song grid.
 }
