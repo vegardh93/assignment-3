@@ -31,10 +31,19 @@ const songGrid = document.getElementById("songGrid");
 // Get the song count element.
 const resultsCount = document.getElementById("resultsCount");
 
+// Get the empty collection message.
+const collectionEmpty = document.getElementById("collectionEmpty");
+
 // Render the songs.
 function renderSongs(songList) {
     songGrid.innerHTML = ""; // Remove previously displayed song cards.
     resultsCount.textContent = songList.length + " of " + songs.length + " songs"; // Update the song count.
+    // Show the empty message when no songs are available.
+    if (songList.length === 0) {
+        collectionEmpty.hidden = false; // Show the empty message.
+    } else {
+        collectionEmpty.hidden = true; // Hide the empty message.
+    }
     // Create a song card for each song.
     for (const song of songList) { // Go through each song.
         const songCard = document.createElement("article"); // Create a song card.
