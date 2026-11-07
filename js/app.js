@@ -66,6 +66,8 @@ for (const song of songs) { // Go through each song.
     songCard.appendChild(addToPlaylistButton); // Add the button to the song card.
     // Add the song card to the song grid.
     songGrid.appendChild(songCard);
+    const resultsCount = document.getElementById("resultsCount"); // Get the song count element.
+    resultsCount.textContent = songs.length + " of " + songs.length + " songs"; // Display the number of available songs.
 }
 
 // Convert seconds to minutes and seconds.
