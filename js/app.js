@@ -51,6 +51,9 @@ const playlistEmpty = document.getElementById("playlistEmpty");
 // Get the playlist duration element.
 const playlistDuration = document.getElementById("playlistDuration");
 
+// Get the clear playlist button.
+const clearPlaylistButton = document.getElementById("clearPlaylistButton");
+
 // Store the songs added to the playlist.
 const playlist = [];
 
@@ -151,6 +154,7 @@ function addSongToPlaylist(song) {
     playlistItems.appendChild(playlistItem); // Display the playlist item.
     playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
     playlistEmpty.hidden = true; // Hide the empty playlist message.
+    clearPlaylistButton.disabled = false; // Enable the clear playlist button.
     updatePlaylistDuration(); // Update the playlist's total duration.
     updateCollection(); // Update the song card buttons.
 }
@@ -168,8 +172,23 @@ function removeSongFromPlaylist(songId, playlistItem) {
         playlistItem.remove(); // Remove the playlist item from the page.
         playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
         playlistEmpty.hidden = playlist.length !== 0; // Show the empty message when needed.
+        clearPlaylistButton.disabled = playlist.length === 0; // Disable the button when the playlist is empty.
         updatePlaylistDuration(); // Update the total duration.
         updateCollection(); // Update the song card buttons.
+}
+
+// Clear the playlist when the button is clicked.
+clearPlaylistButton.addEventListener("click", clearPlaylist);
+
+// Clear all songs from the playlist.
+function clearPlaylist() {
+    playlist.length = 0; // Remove all songs from the playlist array.
+    playlistItems.innerHTML = "", // Remove all playlist items from the page.
+    playlistCount.textContent = "0 songs"; // Reset the song count.
+    playlistCount.hidden = false; // Show the empty playlist message.
+    clearPlaylistButton.disabled = true; // Disable the clear playlist button.
+    updatePlaylistDuration(); // Reset the total duration.
+    updateCollection(); // Enable the song card buttons.
 }
 
 // Update the playlist's total duration.
