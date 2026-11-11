@@ -122,6 +122,7 @@ function formatDuration(durationInSeconds) {
     return minutes + ":" + formattedSeconds; // Return the formatted duration.
 }
 
+// Add a song to the playlist.
 function addSongToPlaylist(song) {
     const songAlreadyAdded = playlist.some(function (playlistSong) {
         return playlistSong.id === song.id; // Check if the song already exists.
@@ -132,10 +133,36 @@ function addSongToPlaylist(song) {
     playlist.push(song); // Add the song to the playlist.
     const playlistItem = document.createElement("li"); // Create a playlist item.
     playlistItem.textContent = song.title + " - " + song.artist; // Set the item's text.
+    // Create a button to remove the song.
+    const removeButton = document.createElement("button"); // Create a button.
+    removeButton.className = "playlist__removeButton"; // Assign the button's CSS class.
+    removeButton.type = "button"; // Set the button's type.
+    removeButton.textContent = "Remove"; // Set the button's text.
+    // Remove the selected song when the button is clicked.
+    removeButton.addEventListener("click", function () {
+        removeSongFromPlaylist(song.id, playlistItem);
+    });
+    playlistItem.appendChild(removeButton); // Add the button to the playlist item.
     playlistItems.appendChild(playlistItem); // Display the playlist item.
-    playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); //Update the song count.
+    playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
     playlistEmpty.hidden = true; // Hide the empty playlist message.
     updatePlaylistDuration(); // Update the playlist's total duration.
+}
+
+// Remove a song from the playlist.
+function removeSongFromPlaylist(songId, playlistItem) {
+    // Find the song by its ID.
+    const songIndex = playlist.findIndex(function (playlistSong) {
+        return playlistSong.id === songId;
+    });
+    if (songIndex === -1) {
+        return; // Stop if the song does not exist.
+    }
+    playlist.splice(songIndex, 1); // Remove the song from the array.
+        playlistItem.remove(); // Remove the playlist item from the page.
+        playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
+        playlistEmpty.hidden = playlist.length !== 0; // Show the empty message when needed.
+        updatePlaylistDuration(); // Update the total duration.
 }
 
 // Update the playlist's total duration.
