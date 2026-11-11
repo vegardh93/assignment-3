@@ -37,6 +37,9 @@ const collectionEmpty = document.getElementById("collectionEmpty");
 // Get the search input.
 const searchInput = document.getElementById("searchInput");
 
+// Get the genre filter.
+const genreFilter = document.getElementById("genreFilter");
+
 // Render the songs.
 function renderSongs(songList) {
     songGrid.innerHTML = ""; // Remove previously displayed song cards.
@@ -105,11 +108,14 @@ function formatDuration(durationInSeconds) {
 // Update the song collection based on the search input.
 function updateCollection() {
     const searchTerm = searchInput.value.toLowerCase().trim(); // Normalize the search text.
+    const selectedGenre = genreFilter.value; // Get the selected genre.
     // Find songs matching the title or artist.
     const matchingSongs = songs.filter(function (song) {
         const songTitle = song.title.toLowerCase(); // Normalize the song title.
         const songArtist = song.artist.toLowerCase(); // Normalize the artist name.
-        return songTitle.includes(searchTerm) || songArtist.includes(searchTerm); // Cheack for a match.
+        const matchesSearch = songTitle.includes(searchTerm) || songArtist.includes(searchTerm); // Check the title or artist.
+        const matchesGenre = selectedGenre === "all" || song.genre === selectedGenre; // Check the selected genre.
+        return matchesSearch && matchesGenre; // Include songs matching both conditions.
     });
     // Display the matching songs.
     renderSongs(matchingSongs);
@@ -117,3 +123,6 @@ function updateCollection() {
 
 // Update the collection when the user types.
 searchInput.addEventListener("input", updateCollection);
+
+// Update the collection when the selected genre changes.
+genreFilter.addEventListener("change", updateCollection);
