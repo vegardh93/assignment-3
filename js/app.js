@@ -48,6 +48,9 @@ const playlistItems = document.getElementById("playlistItems");
 const playlistCount = document.getElementById("playlistCount");
 const playlistEmpty = document.getElementById("playlistEmpty");
 
+// Get the playlist duration element.
+const playlistDuration = document.getElementById("playlistDuration");
+
 // Store the songs added to the playlist.
 const playlist = [];
 
@@ -132,6 +135,17 @@ function addSongToPlaylist(song) {
     playlistItems.appendChild(playlistItem); // Display the playlist item.
     playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); //Update the song count.
     playlistEmpty.hidden = true; // Hide the empty playlist message.
+    updatePlaylistDuration(); // Update the playlist's total duration.
+}
+
+// Update the playlist's total duration.
+function updatePlaylistDuration() {
+    let totalDuration = 0; // Store the total duration in seconds.
+    // Calculate the total duration of all playlist songs.
+    for (const song of playlist) {
+        totalDuration += song.duration; // Add the song's duration.
+    }
+    playlistDuration.textContent = formatDuration(totalDuration); // Display the formatted total duration.
 }
 
 // Update the song collection based on search, genre and sorting.
