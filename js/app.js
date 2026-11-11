@@ -40,6 +40,9 @@ const searchInput = document.getElementById("searchInput");
 // Get the genre filter.
 const genreFilter = document.getElementById("genreFilter");
 
+// Get the sorting menu.
+const sortSelect = document.getElementById("sortSelect");
+
 // Render the songs.
 function renderSongs(songList) {
     songGrid.innerHTML = ""; // Remove previously displayed song cards.
@@ -105,11 +108,12 @@ function formatDuration(durationInSeconds) {
     return minutes + ":" + formattedSeconds; // Return the formatted duration.
 }
 
-// Update the song collection based on the search input.
+// Update the song collection based on search, genre and sorting.
 function updateCollection() {
     const searchTerm = searchInput.value.toLowerCase().trim(); // Normalize the search text.
     const selectedGenre = genreFilter.value; // Get the selected genre.
-    // Find songs matching the title or artist.
+    const selectedSort = sortSelect.value; // Get the selected sorting option.
+    // Find songs matching the search text and selected genre.
     const matchingSongs = songs.filter(function (song) {
         const songTitle = song.title.toLowerCase(); // Normalize the song title.
         const songArtist = song.artist.toLowerCase(); // Normalize the artist name.
@@ -117,7 +121,33 @@ function updateCollection() {
         const matchesGenre = selectedGenre === "all" || song.genre === selectedGenre; // Check the selected genre.
         return matchesSearch && matchesGenre; // Include songs matching both conditions.
     });
-    // Display the matching songs.
+    // Sort songs by the selected option.
+    if (selectedSort === "titleAscending") {
+        matchingSongs.sort(function (firstSong, secondSong) {
+            return firstSong.title.localeCompare(secondSong.title); // Sort titles from A to Z.
+        });
+    } else if (selectedSort === "titleDescending") {
+        matchingSongs.sort(function (firstSong, secondSong) {
+            return secondSong.title.localeCompare(firstSong.title); // Sort titles from Z to A.
+        });
+    } else if (selectedSort === "artistAscending") {
+        matchingSongs.sort(function (firstSong, secondSong) {
+            return firstSong.artist.localeCompare(secondSong.artist); // Sort artists from A to Z.
+        });
+    } else if (selectedSort === "artistDescending") {
+        matchingSongs.sort(function (firstSong, secondSong) {
+            return secondSong.artist.localeCompare(firstSong.artist); // Sort artists from Z to A.
+        });
+    } else if (selectedSort === "durationAscending") {
+        matchingSongs.sort(function (firstSong, secondSong) {
+            return firstSong.duration - secondSong.duration; // Sort from shortest to longest.
+        });
+    } else if (selectedSort === "durationDescending") {
+        matchingSongs.sort(function (firstSong, secondSong) {
+            return secondSong.duration - firstSong.duration; // Sort from longest to shortest.
+        });
+    }
+    // Display the matching and sorted songs.
     renderSongs(matchingSongs);
 }
 
@@ -126,3 +156,6 @@ searchInput.addEventListener("input", updateCollection);
 
 // Update the collection when the selected genre changes.
 genreFilter.addEventListener("change", updateCollection);
+
+// Update the collection when the sorting option changes.
+sortSelect.addEventListener("change", updateCollection);
