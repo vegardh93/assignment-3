@@ -219,6 +219,12 @@ body {
     opacity: 0.85;
 }
 
+/* Disabled add to playlist button. */
+.songCard__addButton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
 /* Tablet layout. */
 @media (max-width: 1024px) {
     .collection__songGrid {

@@ -98,10 +98,15 @@ function renderSongs(songList) {
         const addToPlaylistButton = document.createElement("button"); // Create a button.
         addToPlaylistButton.className = "songCard__addButton"; // Assign the button's CSS class.
         addToPlaylistButton.type = "button"; // Set the button's type.
-        addToPlaylistButton.textContent = "Add to Playlist"; // Set the button's text.
+        //Check if the song is already in the playlist.
+        const songAlreadyAdded = playlist.some(function (playlistSong) {
+            return playlistSong.id === song.id; // Compare the song IDs.
+        })
         addToPlaylistButton.addEventListener("click", function () {
             addSongToPlaylist(song); // Add the selected song to the playlist.
         });
+        addToPlaylistButton.disabled = songAlreadyAdded; // Disable the button if the song is already added.
+        addToPlaylistButton.textContent = songAlreadyAdded ? "Added to Playlist" : "Add to Playlist"; // Set the button's text.
         songCard.appendChild(addToPlaylistButton); // Add the button to the song card.
         // Add the song card to the song grid.
         songGrid.appendChild(songCard);
@@ -147,6 +152,7 @@ function addSongToPlaylist(song) {
     playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
     playlistEmpty.hidden = true; // Hide the empty playlist message.
     updatePlaylistDuration(); // Update the playlist's total duration.
+    updateCollection(); // Update the song card buttons.
 }
 
 // Remove a song from the playlist.
@@ -163,6 +169,7 @@ function removeSongFromPlaylist(songId, playlistItem) {
         playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
         playlistEmpty.hidden = playlist.length !== 0; // Show the empty message when needed.
         updatePlaylistDuration(); // Update the total duration.
+        updateCollection(); // Update the song card buttons.
 }
 
 // Update the playlist's total duration.
