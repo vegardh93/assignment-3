@@ -43,6 +43,14 @@ const genreFilter = document.getElementById("genreFilter");
 // Get the sorting menu.
 const sortSelect = document.getElementById("sortSelect");
 
+// Get the playlist elements.
+const playlistItems = document.getElementById("playlistItems");
+const playlistCount = document.getElementById("playlistCount");
+const playlistEmpty = document.getElementById("playlistEmpty");
+
+// Store the songs added to the playlist.
+const playlist = [];
+
 // Render the songs.
 function renderSongs(songList) {
     songGrid.innerHTML = ""; // Remove previously displayed song cards.
@@ -88,6 +96,9 @@ function renderSongs(songList) {
         addToPlaylistButton.className = "songCard__addButton"; // Assign the button's CSS class.
         addToPlaylistButton.type = "button"; // Set the button's type.
         addToPlaylistButton.textContent = "Add to Playlist"; // Set the button's text.
+        addToPlaylistButton.addEventListener("click", function () {
+            addSongToPlaylist(song); // Add the selected song to the playlist.
+        });
         songCard.appendChild(addToPlaylistButton); // Add the button to the song card.
         // Add the song card to the song grid.
         songGrid.appendChild(songCard);
@@ -106,6 +117,21 @@ function formatDuration(durationInSeconds) {
         formattedSeconds = "0" + seconds; // Add a leading zero when needed.
     }
     return minutes + ":" + formattedSeconds; // Return the formatted duration.
+}
+
+function addSongToPlaylist(song) {
+    const songAlreadyAdded = playlist.some(function (playlistSong) {
+        return playlistSong.id === song.id; // Check if the song already exists.
+    });
+    if (songAlreadyAdded) {
+        return; // Prevent duplicate songs.
+    }
+    playlist.push(song); // Add the song to the playlist.
+    const playlistItem = document.createElement("li"); // Create a playlist item.
+    playlistItem.textContent = song.title + " - " + song.artist; // Set the item's text.
+    playlistItems.appendChild(playlistItem); // Display the playlist item.
+    playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); //Update the song count.
+    playlistEmpty.hidden = true; // Hide the empty playlist message.
 }
 
 // Update the song collection based on search, genre and sorting.
