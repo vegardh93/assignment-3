@@ -34,6 +34,9 @@ const resultsCount = document.getElementById("resultsCount");
 // Get the empty collection message.
 const collectionEmpty = document.getElementById("collectionEmpty");
 
+// Get the search input.
+const searchInput = document.getElementById("searchInput");
+
 // Render the songs.
 function renderSongs(songList) {
     songGrid.innerHTML = ""; // Remove previously displayed song cards.
@@ -98,3 +101,19 @@ function formatDuration(durationInSeconds) {
     }
     return minutes + ":" + formattedSeconds; // Return the formatted duration.
 }
+
+// Update the song collection based on the search input.
+function updateCollection() {
+    const searchTerm = searchInput.value.toLowerCase().trim(); // Normalize the search text.
+    // Find songs matching the title or artist.
+    const matchingSongs = songs.filter(function (song) {
+        const songTitle = song.title.toLowerCase(); // Normalize the song title.
+        const songArtist = song.artist.toLowerCase(); // Normalize the artist name.
+        return songTitle.includes(searchTerm) || songArtist.includes(searchTerm); // Cheack for a match.
+    });
+    // Display the matching songs.
+    renderSongs(matchingSongs);
+}
+
+// Update the collection when the user types.
+searchInput.addEventListener("input", updateCollection);
