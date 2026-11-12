@@ -130,6 +130,22 @@ function formatDuration(durationInSeconds) {
     return minutes + ":" + formattedSeconds; // Return the formatted duration.
 }
 
+// Save the playlist to local storage.
+function savePlaylist() {
+    localStorage.setItem("musicPlaylist", JSON.stringify(playlist)); // Save the playlist as a JSON string.
+}
+
+// Load the playlist from local storage.
+function loadPlaylist() {
+    const savedPlaylist = localStorage.getItem("musicPlaylist"); // Get the saved playlist.
+    if (savedPlaylist) {
+        const savedSongs = JSON.parse(savedPlaylist); // Convert the JSON string into an array.
+        for (const song of savedSongs) {
+            addSongToPlaylist(song); // Resore each som to the playlist.
+        }
+    }
+}
+
 // Add a song to the playlist.
 function addSongToPlaylist(song) {
     const songAlreadyAdded = playlist.some(function (playlistSong) {
@@ -139,6 +155,7 @@ function addSongToPlaylist(song) {
         return; // Prevent duplicate songs.
     }
     playlist.push(song); // Add the song to the playlist.
+    savePlaylist(); // Save the updated playlist.
     const playlistItem = document.createElement("li"); // Create a playlist item.
     playlistItem.textContent = song.title + " - " + song.artist; // Set the item's text.
     // Create a button to remove the song.
@@ -169,6 +186,7 @@ function removeSongFromPlaylist(songId, playlistItem) {
         return; // Stop if the song does not exist.
     }
     playlist.splice(songIndex, 1); // Remove the song from the array.
+    savePlaylist(); // Save the updated playlist.
         playlistItem.remove(); // Remove the playlist item from the page.
         playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
         playlistEmpty.hidden = playlist.length !== 0; // Show the empty message when needed.
@@ -183,6 +201,7 @@ clearPlaylistButton.addEventListener("click", clearPlaylist);
 // Clear all songs from the playlist.
 function clearPlaylist() {
     playlist.length = 0; // Remove all songs from the playlist array.
+    savePlaylist(); // Save the empty playlist.
     playlistItems.innerHTML = "", // Remove all playlist items from the page.
     playlistCount.textContent = "0 songs"; // Reset the song count.
     playlistCount.hidden = false; // Show the empty playlist message.
@@ -252,3 +271,6 @@ genreFilter.addEventListener("change", updateCollection);
 
 // Update the collection when the sorting option changes.
 sortSelect.addEventListener("change", updateCollection);
+
+// Restore the playlist when the application starts.
+loadPlaylist();
