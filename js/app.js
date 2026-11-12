@@ -101,7 +101,7 @@ function renderSongs(songList) {
         const addToPlaylistButton = document.createElement("button"); // Create a button.
         addToPlaylistButton.className = "songCard__addButton"; // Assign the button's CSS class.
         addToPlaylistButton.type = "button"; // Set the button's type.
-        //Check if the song is already in the playlist.
+        // Check if the song is already in the playlist.
         const songAlreadyAdded = playlist.some(function (playlistSong) {
             return playlistSong.id === song.id; // Compare the song IDs.
         })
@@ -141,7 +141,7 @@ function loadPlaylist() {
     if (savedPlaylist) {
         const savedSongs = JSON.parse(savedPlaylist); // Convert the JSON string into an array.
         for (const song of savedSongs) {
-            addSongToPlaylist(song); // Resore each som to the playlist.
+            addSongToPlaylist(song); // Restore each song to the playlist.
         }
     }
 }
@@ -156,10 +156,25 @@ function addSongToPlaylist(song) {
     }
     playlist.push(song); // Add the song to the playlist.
     savePlaylist(); // Save the updated playlist.
+    // Playlist item.
     const playlistItem = document.createElement("li"); // Create a playlist item.
     playlistItem.className = "playlist__item"; // Assign the item's CSS class.
-    playlistItem.textContent = song.title + " - " + song.artist; // Set the item's text.
-    // Create a button to remove the song.
+    // Song information container.
+    const songInfo = document.createElement("div"); // Create a container.
+    songInfo.className = "playlist__songInfo"; // Assign the container's CSS class.
+    // Album cover.
+    const songCover = document.createElement("img"); // Create an image.
+    songCover.className = "playlist__songCover"; // Assign the image's CSS class.
+    songCover.src = "./assets/covers/" + coverFiles[song.id]; // Set the album cover's file path.
+    songCover.alt = "Album cover for " + song.title + " by " + song.artist; // Set the image's alternative text.
+    songInfo.appendChild(songCover); // Add the image to the container.
+    // Song title and artist.
+    const songText = document.createElement("span"); // Create a text element.
+    songText.className = "playlist__songText"; // Assign the text element's CSS class.
+    songText.textContent = song.title + " - " + song.artist; // Set the song information.
+    songInfo.appendChild(songText); // Add the text to the container.
+    playlistItem.appendChild(songInfo); // Add the song information to the playlist item.
+    // Remove button.
     const removeButton = document.createElement("button"); // Create a button.
     removeButton.className = "playlist__removeButton"; // Assign the button's CSS class.
     removeButton.type = "button"; // Set the button's type.
@@ -203,9 +218,9 @@ clearPlaylistButton.addEventListener("click", clearPlaylist);
 function clearPlaylist() {
     playlist.length = 0; // Remove all songs from the playlist array.
     savePlaylist(); // Save the empty playlist.
-    playlistItems.innerHTML = "", // Remove all playlist items from the page.
+    playlistItems.innerHTML = ""; // Remove all playlist items from the page.
     playlistCount.textContent = "0 songs"; // Reset the song count.
-    playlistCount.hidden = false; // Show the empty playlist message.
+    playlistEmpty.hidden = false; // Show the empty playlist message.
     clearPlaylistButton.disabled = true; // Disable the clear playlist button.
     updatePlaylistDuration(); // Reset the total duration.
     updateCollection(); // Enable the song card buttons.
