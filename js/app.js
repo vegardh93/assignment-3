@@ -157,6 +157,7 @@ function addSongToPlaylist(song) {
     playlist.push(song); // Add the song to the playlist.
     savePlaylist(); // Save the updated playlist.
     const playlistItem = document.createElement("li"); // Create a playlist item.
+    playlistItem.className = "playlist__item"; // Assign the item's CSS class.
     playlistItem.textContent = song.title + " - " + song.artist; // Set the item's text.
     // Create a button to remove the song.
     const removeButton = document.createElement("button"); // Create a button.
