@@ -1,4 +1,4 @@
-// Album cover filenames matched to song IDs.
+// Album covers.
 const coverFiles = {
     1: "darudeSandstorm.webp",
     2: "queenBohemianRhapsody.webp",
@@ -25,92 +25,75 @@ const coverFiles = {
     23: "aviciiLevels.webp"
 };
 
-// Get the container for the song cards.
+// DOM elements and playlist state.
 const songGrid = document.getElementById("songGrid");
-
-// Get the song count element.
 const resultsCount = document.getElementById("resultsCount");
-
-// Get the empty collection message.
 const collectionEmpty = document.getElementById("collectionEmpty");
-
-// Get the search input.
 const searchInput = document.getElementById("searchInput");
-
-// Get the genre filter.
 const genreFilter = document.getElementById("genreFilter");
-
-// Get the sorting menu.
 const sortSelect = document.getElementById("sortSelect");
-
-// Get the playlist elements.
 const playlistItems = document.getElementById("playlistItems");
 const playlistCount = document.getElementById("playlistCount");
 const playlistEmpty = document.getElementById("playlistEmpty");
-
-// Get the playlist duration element.
 const playlistDuration = document.getElementById("playlistDuration");
-
-// Get the clear playlist button.
 const clearPlaylistButton = document.getElementById("clearPlaylistButton");
-
-// Store the songs added to the playlist.
 const playlist = [];
 
 // Render the songs.
 function renderSongs(songList) {
-    songGrid.innerHTML = ""; // Remove previously displayed song cards.
-    resultsCount.textContent = songList.length + " of " + songs.length + " songs"; // Update the song count.
+    songGrid.innerHTML = "";
+    resultsCount.textContent = songList.length + " of " + songs.length + " songs";
     // Show the empty message when no songs are available.
     if (songList.length === 0) {
-        collectionEmpty.hidden = false; // Show the empty message.
+        collectionEmpty.hidden = false;
     } else {
-        collectionEmpty.hidden = true; // Hide the empty message.
+        collectionEmpty.hidden = true;
     }
     // Create a song card for each song.
-    for (const song of songList) { // Go through each song.
-        const songCard = document.createElement("article"); // Create a song card.
-        songCard.className = "songCard"; // Assign the song card's CSS class.
+    for (const song of songList) {
+        const songCard = document.createElement("article");
+        songCard.className = "songCard";
         // Cover.
-        const songCover = document.createElement("img"); // Create an image.
-        songCover.className = "songCard__cover"; // Assign the image's CSS class.
-        songCover.src = "./assets/covers/" + coverFiles[song.id]; // Set the album cover's file path.
-        songCover.alt = "Album cover for " + song.title + " by " + song.artist; // Set the image's alternative text.
-        songCard.appendChild(songCover); // Add the album cover to the song card.
+        const songCover = document.createElement("img");
+        songCover.className = "songCard__cover";
+        songCover.src = "./assets/covers/" + coverFiles[song.id];
+        songCover.alt = "Album cover for " + song.title + " by " + song.artist;
+        songCard.appendChild(songCover);
         // Song title.
-        const songTitle = document.createElement("h3"); // Create new heading.
-        songTitle.className = "songCard__title"; // Assign the heading's CSS class.
-        songTitle.textContent = song.title; // Set the heading's text to the song's title.
-        songCard.appendChild(songTitle); // Add the heading to the song card.
+        const songTitle = document.createElement("h3");
+        songTitle.className = "songCard__title";
+        songTitle.textContent = song.title;
+        songCard.appendChild(songTitle);
         // Artist.
-        const songArtist = document.createElement("p"); // Create a paragraph.
-        songArtist.className = "songCard__artist"; // Assign the paragraph's CSS class.
-        songArtist.textContent = song.artist; // Set the paragraph's text to the artist's name.
-        songCard.appendChild(songArtist); //Add the artist to the song card.
+        const songArtist = document.createElement("p");
+        songArtist.className = "songCard__artist";
+        songArtist.textContent = song.artist;
+        songCard.appendChild(songArtist);
         // Genre.
-        const songGenre = document.createElement("p"); // Create a paragraph.
-        songGenre.className = "songCard__genre"; // Assign the paragraph's CSS class.
-        songGenre.textContent = song.genre; // Set the paragraph's text to the song's genre.
-        songCard.appendChild(songGenre); // Add the genre to the song card.
+        const songGenre = document.createElement("p");
+        songGenre.className = "songCard__genre";
+        songGenre.textContent = song.genre;
+        songCard.appendChild(songGenre);
         // Song duration.
-        const songDuration = document.createElement("p"); // Create a paragraph.
-        songDuration.className = "songCard__duration"; // Assign the paragraph's CSS class.
-        songDuration.textContent = formatDuration(song.duration); // Set the paragraph's text to the formatted duration.
-        songCard.appendChild(songDuration); // Add the duration to the song card.
+        const songDuration = document.createElement("p");
+        songDuration.className = "songCard__duration";
+        songDuration.textContent = formatDuration(song.duration);
+        songCard.appendChild(songDuration);
         // Add to playlist button.
-        const addToPlaylistButton = document.createElement("button"); // Create a button.
-        addToPlaylistButton.className = "songCard__addButton"; // Assign the button's CSS class.
-        addToPlaylistButton.type = "button"; // Set the button's type.
+        const addToPlaylistButton = document.createElement("button");
+        addToPlaylistButton.className = "songCard__addButton";
+        addToPlaylistButton.type = "button";
         // Check if the song is already in the playlist.
         const songAlreadyAdded = playlist.some(function (playlistSong) {
-            return playlistSong.id === song.id; // Compare the song IDs.
+            return playlistSong.id === song.id;
         })
+        // Add the selected song to the playlist.
         addToPlaylistButton.addEventListener("click", function () {
-            addSongToPlaylist(song); // Add the selected song to the playlist.
+            addSongToPlaylist(song);
         });
-        addToPlaylistButton.disabled = songAlreadyAdded; // Disable the button if the song is already added.
-        addToPlaylistButton.textContent = songAlreadyAdded ? "Added to Playlist" : "Add to Playlist"; // Set the button's text.
-        songCard.appendChild(addToPlaylistButton); // Add the button to the song card.
+        addToPlaylistButton.disabled = songAlreadyAdded;
+        addToPlaylistButton.textContent = songAlreadyAdded ? "Added to Playlist" : "Add to Playlist";
+        songCard.appendChild(addToPlaylistButton);
         // Add the song card to the song grid.
         songGrid.appendChild(songCard);
     }
@@ -121,27 +104,27 @@ renderSongs(songs);
 
 // Convert seconds to minutes and seconds.
 function formatDuration(durationInSeconds) {
-    const minutes = Math.floor(durationInSeconds / 60); // Calculate the number of whole minutes.
-    const seconds = durationInSeconds % 60; // Calculate the remaining seconds.
-    let formattedSeconds = seconds; // Store the remaining seconds.
+    const minutes = Math.floor(durationInSeconds / 60);
+    const seconds = durationInSeconds % 60;
+    let formattedSeconds = seconds;
     if (seconds < 10) {
-        formattedSeconds = "0" + seconds; // Add a leading zero when needed.
+        formattedSeconds = "0" + seconds;
     }
-    return minutes + ":" + formattedSeconds; // Return the formatted duration.
+    return minutes + ":" + formattedSeconds;
 }
 
 // Save the playlist to local storage.
 function savePlaylist() {
-    localStorage.setItem("musicPlaylist", JSON.stringify(playlist)); // Save the playlist as a JSON string.
+    localStorage.setItem("musicPlaylist", JSON.stringify(playlist));
 }
 
 // Load the playlist from local storage.
 function loadPlaylist() {
-    const savedPlaylist = localStorage.getItem("musicPlaylist"); // Get the saved playlist.
+    const savedPlaylist = localStorage.getItem("musicPlaylist");
     if (savedPlaylist) {
-        const savedSongs = JSON.parse(savedPlaylist); // Convert the JSON string into an array.
+        const savedSongs = JSON.parse(savedPlaylist);
         for (const song of savedSongs) {
-            addSongToPlaylist(song); // Restore each song to the playlist.
+            addSongToPlaylist(song);
         }
     }
 }
@@ -149,105 +132,102 @@ function loadPlaylist() {
 // Add a song to the playlist.
 function addSongToPlaylist(song) {
     const songAlreadyAdded = playlist.some(function (playlistSong) {
-        return playlistSong.id === song.id; // Check if the song already exists.
+        return playlistSong.id === song.id;
     });
     if (songAlreadyAdded) {
-        return; // Prevent duplicate songs.
+        return;
     }
-    playlist.push(song); // Add the song to the playlist.
-    savePlaylist(); // Save the updated playlist.
+    playlist.push(song);
+    savePlaylist();
     // Playlist item.
-    const playlistItem = document.createElement("li"); // Create a playlist item.
-    playlistItem.className = "playlist__item"; // Assign the item's CSS class.
+    const playlistItem = document.createElement("li");
+    playlistItem.className = "playlist__item";
     // Song information container.
-    const songInfo = document.createElement("div"); // Create a container.
-    songInfo.className = "playlist__songInfo"; // Assign the container's CSS class.
+    const songInfo = document.createElement("div");
+    songInfo.className = "playlist__songInfo";
     // Album cover.
-    const songCover = document.createElement("img"); // Create an image.
-    songCover.className = "playlist__songCover"; // Assign the image's CSS class.
-    songCover.src = "./assets/covers/" + coverFiles[song.id]; // Set the album cover's file path.
-    songCover.alt = "Album cover for " + song.title + " by " + song.artist; // Set the image's alternative text.
-    songInfo.appendChild(songCover); // Add the image to the container.
+    const songCover = document.createElement("img");
+    songCover.className = "playlist__songCover";
+    songCover.src = "./assets/covers/" + coverFiles[song.id];
+    songCover.alt = "Album cover for " + song.title + " by " + song.artist;
+    songInfo.appendChild(songCover);
     // Song title and artist.
-    const songText = document.createElement("span"); // Create a text element.
-    songText.className = "playlist__songText"; // Assign the text element's CSS class.
-    songText.textContent = song.title + " - " + song.artist; // Set the song information.
-    songInfo.appendChild(songText); // Add the text to the container.
-    playlistItem.appendChild(songInfo); // Add the song information to the playlist item.
+    const songText = document.createElement("span");
+    songText.className = "playlist__songText";
+    songText.textContent = song.title + " - " + song.artist;
+    songInfo.appendChild(songText);
+    playlistItem.appendChild(songInfo);
     // Remove button.
-    const removeButton = document.createElement("button"); // Create a button.
-    removeButton.className = "playlist__removeButton"; // Assign the button's CSS class.
-    removeButton.type = "button"; // Set the button's type.
-    removeButton.textContent = "Remove"; // Set the button's text.
+    const removeButton = document.createElement("button");
+    removeButton.className = "playlist__removeButton";
+    removeButton.type = "button";
+    removeButton.textContent = "Remove";
     // Remove the selected song when the button is clicked.
     removeButton.addEventListener("click", function () {
         removeSongFromPlaylist(song.id, playlistItem);
     });
-    playlistItem.appendChild(removeButton); // Add the button to the playlist item.
-    playlistItems.appendChild(playlistItem); // Display the playlist item.
-    playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
-    playlistEmpty.hidden = true; // Hide the empty playlist message.
-    clearPlaylistButton.disabled = false; // Enable the clear playlist button.
-    updatePlaylistDuration(); // Update the playlist's total duration.
-    updateCollection(); // Update the song card buttons.
+    playlistItem.appendChild(removeButton);
+    playlistItems.appendChild(playlistItem);
+    playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs");
+    playlistEmpty.hidden = true;
+    clearPlaylistButton.disabled = false;
+    updatePlaylistDuration();
+    updateCollection();
 }
 
 // Remove a song from the playlist.
 function removeSongFromPlaylist(songId, playlistItem) {
-    // Find the song by its ID.
     const songIndex = playlist.findIndex(function (playlistSong) {
         return playlistSong.id === songId;
     });
     if (songIndex === -1) {
-        return; // Stop if the song does not exist.
+        return;
     }
-    playlist.splice(songIndex, 1); // Remove the song from the array.
-    savePlaylist(); // Save the updated playlist.
-        playlistItem.remove(); // Remove the playlist item from the page.
-        playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs"); // Update the song count.
-        playlistEmpty.hidden = playlist.length !== 0; // Show the empty message when needed.
-        clearPlaylistButton.disabled = playlist.length === 0; // Disable the button when the playlist is empty.
-        updatePlaylistDuration(); // Update the total duration.
-        updateCollection(); // Update the song card buttons.
+    playlist.splice(songIndex, 1);
+    savePlaylist();
+        playlistItem.remove();
+        playlistCount.textContent = playlist.length + (playlist.length === 1 ? " song" : " songs");
+        playlistEmpty.hidden = playlist.length !== 0;
+        clearPlaylistButton.disabled = playlist.length === 0;
+        updatePlaylistDuration();
+        updateCollection();
 }
-
 // Clear the playlist when the button is clicked.
 clearPlaylistButton.addEventListener("click", clearPlaylist);
 
 // Clear all songs from the playlist.
 function clearPlaylist() {
-    playlist.length = 0; // Remove all songs from the playlist array.
-    savePlaylist(); // Save the empty playlist.
-    playlistItems.innerHTML = ""; // Remove all playlist items from the page.
-    playlistCount.textContent = "0 songs"; // Reset the song count.
-    playlistEmpty.hidden = false; // Show the empty playlist message.
-    clearPlaylistButton.disabled = true; // Disable the clear playlist button.
-    updatePlaylistDuration(); // Reset the total duration.
-    updateCollection(); // Enable the song card buttons.
+    playlist.length = 0;
+    savePlaylist();
+    playlistItems.innerHTML = "";
+    playlistCount.textContent = "0 songs";
+    playlistEmpty.hidden = false;
+    clearPlaylistButton.disabled = true;
+    updatePlaylistDuration();
+    updateCollection();
 }
 
 // Update the playlist's total duration.
 function updatePlaylistDuration() {
-    let totalDuration = 0; // Store the total duration in seconds.
-    // Calculate the total duration of all playlist songs.
+    let totalDuration = 0;
     for (const song of playlist) {
-        totalDuration += song.duration; // Add the song's duration.
+        totalDuration += song.duration;
     }
-    playlistDuration.textContent = formatDuration(totalDuration); // Display the formatted total duration.
+    playlistDuration.textContent = formatDuration(totalDuration);
 }
 
 // Update the song collection based on search, genre and sorting.
 function updateCollection() {
-    const searchTerm = searchInput.value.toLowerCase().trim(); // Normalize the search text.
-    const selectedGenre = genreFilter.value; // Get the selected genre.
-    const selectedSort = sortSelect.value; // Get the selected sorting option.
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const selectedGenre = genreFilter.value;
+    const selectedSort = sortSelect.value;
     // Find songs matching the search text and selected genre.
     const matchingSongs = songs.filter(function (song) {
-        const songTitle = song.title.toLowerCase(); // Normalize the song title.
-        const songArtist = song.artist.toLowerCase(); // Normalize the artist name.
-        const matchesSearch = songTitle.includes(searchTerm) || songArtist.includes(searchTerm); // Check the title or artist.
-        const matchesGenre = selectedGenre === "all" || song.genre === selectedGenre; // Check the selected genre.
-        return matchesSearch && matchesGenre; // Include songs matching both conditions.
+        const songTitle = song.title.toLowerCase();
+        const songArtist = song.artist.toLowerCase();
+        const matchesSearch = songTitle.includes(searchTerm) || songArtist.includes(searchTerm);
+        const matchesGenre = selectedGenre === "all" || song.genre === selectedGenre;
+        return matchesSearch && matchesGenre;
     });
     // Sort songs by the selected option.
     if (selectedSort === "titleAscending") {
@@ -279,14 +259,8 @@ function updateCollection() {
     renderSongs(matchingSongs);
 }
 
-// Update the collection when the user types.
+// Event listeners and initialization.
 searchInput.addEventListener("input", updateCollection);
-
-// Update the collection when the selected genre changes.
 genreFilter.addEventListener("change", updateCollection);
-
-// Update the collection when the sorting option changes.
 sortSelect.addEventListener("change", updateCollection);
-
-// Restore the playlist when the application starts.
 loadPlaylist();
